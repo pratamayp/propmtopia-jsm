@@ -13,13 +13,13 @@ const MyProfile = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    if (!session) router.push("/");
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${session?.user.id}/posts`);
       const data = await response.json();
 
       setPosts(data);
     };
-
     if (session?.user.id) fetchPosts();
   }, []);
 
@@ -38,19 +38,23 @@ const MyProfile = () => {
 
         const filteredPost = posts.filter((p) => p._id !== post._id);
 
-        setPosts(filteredPost)
+        setPosts(filteredPost);
       } catch (error) {}
     }
   };
 
   return (
-    <Profile
-      name="My"
-      desc="Welcome to your personalized profile page"
-      data={posts}
-      handleEdit={handleEdit}
-      handleDelete={handleDelete}
-    />
+    <>
+      {session && (
+        <Profile
+          name="My"
+          desc="Welcome to your personalized profile page"
+          data={posts}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
+      )}
+    </>
   );
 };
 
