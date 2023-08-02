@@ -11,6 +11,7 @@ export const metadata = {
 const RootLayout = ({ children }) => {
   return (
     <html lang="en">
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       <body suppressHydrationWarning={true}>
         <Provider>
           <div className="main">
